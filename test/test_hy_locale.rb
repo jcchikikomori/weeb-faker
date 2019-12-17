@@ -24,22 +24,33 @@ class TestHyLocale < Test::Unit::TestCase
     assert_kind_of String, Faker::Address.village
     assert_equal 'գ.', Faker::Address.village_prefix
     assert Faker::Address.zip_code.start_with?('0', '1', '2', '3', '4')
-    assert Faker::Address.zip('ԱԳ').start_with?('02', '03', '04', '05')
-    assert Faker::Address.zip('ԱՐ').start_with?('06', '07', '08')
-    assert Faker::Address.zip('ԱՄ').start_with?('09', '10', '11')
-    assert Faker::Address.zip('ԳՂ').start_with?('12', '13', '14', '15', '16')
-    assert Faker::Address.zip('ԼՌ').start_with?('17', '18', '19', '20', '21')
-    assert Faker::Address.zip('ԿՏ').start_with?('22', '23', '24', '25')
-    assert Faker::Address.zip('ՇԿ').start_with?('26', '27', '28', '29', '30', '31')
-    assert Faker::Address.zip('ՍՅ').start_with?('32', '33', '34', '35')
-    assert Faker::Address.zip('ՎՁ').start_with?('36', '37', '38')
-    assert Faker::Address.zip('ՏՎ').start_with?('39', '40', '41', '42')
+    assert Faker::Address.zip(state_abbreviation: 'ԱԳ').start_with?('02', '03', '04', '05')
+    assert Faker::Address.zip(state_abbreviation: 'ԱՐ').start_with?('06', '07', '08')
+    assert Faker::Address.zip(state_abbreviation: 'ԱՄ').start_with?('09', '10', '11')
+    assert Faker::Address.zip(state_abbreviation: 'ԳՂ').start_with?('12', '13', '14', '15', '16')
+    assert Faker::Address.zip(state_abbreviation: 'ԼՌ').start_with?('17', '18', '19', '20', '21')
+    assert Faker::Address.zip(state_abbreviation: 'ԿՏ').start_with?('22', '23', '24', '25')
+    assert Faker::Address.zip(state_abbreviation: 'ՇԿ').start_with?('26', '27', '28', '29', '30', '31')
+    assert Faker::Address.zip(state_abbreviation: 'ՍՅ').start_with?('32', '33', '34', '35')
+    assert Faker::Address.zip(state_abbreviation: 'ՎՁ').start_with?('36', '37', '38')
+    assert Faker::Address.zip(state_abbreviation: 'ՏՎ').start_with?('39', '40', '41', '42')
     assert_kind_of String, Faker::Address.street_name
     assert_kind_of String, Faker::Address.street_address
     assert_includes %w[փողոց պողոտա], Faker::Address.street_suffix
     assert_includes 1..3, Faker::Address.building_number.size
     assert Faker::Address.secondary_address.start_with?('բն. ')
     assert_kind_of String, Faker::Address.full_address
+  end
+
+  def test_hy_artist_methods
+    assert_kind_of String, Faker::Artist.name
+  end
+
+  def test_hy_book_methods
+    assert_kind_of String, Faker::Book.title
+    assert_kind_of String, Faker::Book.author
+    assert_kind_of String, Faker::Book.publisher
+    assert_kind_of String, Faker::Book.genre
   end
 
   def test_hy_color_methods
@@ -80,6 +91,17 @@ class TestHyLocale < Test::Unit::TestCase
     assert_kind_of String, Faker::Currency.name
   end
 
+  def test_hy_food_methods
+    assert_kind_of String, Faker::Food.dish
+    assert_kind_of String, Faker::Food.descriptions
+    assert_kind_of String, Faker::Food.ingredients
+    assert_kind_of String, Faker::Food.fruits
+    assert_kind_of String, Faker::Food.vegetables
+    assert_kind_of String, Faker::Food.spices
+    assert_kind_of String, Faker::Food.measurements
+    assert_kind_of String, Faker::Food.metric_measurements
+  end
+
   def test_hy_internet_methods
     assert_kind_of String, Faker::Internet.email
     assert_kind_of String, Faker::Internet.free_email
@@ -97,6 +119,10 @@ class TestHyLocale < Test::Unit::TestCase
     assert_kind_of String, Faker::Job.employment_type
     assert_kind_of String, Faker::Job.education_level
     assert_kind_of String, Faker::Job.title
+  end
+
+  def test_hy_military_methods
+    assert_kind_of String, Faker::Military.army_rank
   end
 
   def test_hy_name_methods
@@ -118,5 +144,21 @@ class TestHyLocale < Test::Unit::TestCase
     assert_kind_of String, Faker::PhoneNumber.cell_phone
     assert_kind_of String, Faker::PhoneNumber.phone_number
     assert_includes ['+1-374', '+374'], Faker::PhoneNumber.country_code
+  end
+
+  def test_hy_science_methods
+    assert_kind_of String, Faker::Science.element
+    assert_kind_of String, Faker::Science.scientist
+  end
+
+  def test_hy_space_methods
+    assert_kind_of String, Faker::Space.planet
+    assert_kind_of String, Faker::Space.moon
+    assert_kind_of String, Faker::Space.galaxy
+    assert_kind_of String, Faker::Space.nebula
+    assert_kind_of String, Faker::Space.constellation
+    assert_kind_of String, Faker::Space.star
+    assert_kind_of String, Faker::Space.distance_measurement
+    assert_kind_of String, Faker::Space.meteorite
   end
 end

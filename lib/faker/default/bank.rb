@@ -5,7 +5,11 @@ module Faker
     flexible :bank
 
     class << self
-      def account_number(digits = 10)
+      def account_number(legacy_digits = NOT_GIVEN, digits: 10)
+        warn_for_deprecated_arguments do |keywords|
+          keywords << :digits if legacy_digits != NOT_GIVEN
+        end
+
         output = ''
 
         output += rand.to_s[2..-1] while output.length < digits
@@ -13,10 +17,14 @@ module Faker
         output[0...digits]
       end
 
-      def iban(country_code = 'GB')
-        # Each country has it's own format for bank accounts
+      def iban(legacy_country_code = NOT_GIVEN, country_code: 'GB')
+        # Each country has its own format for bank accounts
         # Many of them use letters in certain parts of the account
         # Using regex patterns we can create virtually any type of bank account
+        warn_for_deprecated_arguments do |keywords|
+          keywords << :country_code if legacy_country_code != NOT_GIVEN
+        end
+
         begin
           pattern = fetch("bank.iban_details.#{country_code.downcase}.bban_pattern")
         rescue I18n::MissingTranslationData
@@ -50,8 +58,11 @@ module Faker
 
       def checksum(num_string)
         num_array = num_string.split('').map(&:to_i)
-        digit = (7 * (num_array[0] + num_array[3] + num_array[6]) + 3 * (num_array[1] + num_array[4] + num_array[7]) + 9 * (num_array[2] + num_array[5])) % 10
-        digit == num_array[8]
+        (
+          7 * (num_array[0] + num_array[3] + num_array[6]) +
+            3 * (num_array[1] + num_array[4] + num_array[7]) +
+            9 * (num_array[2] + num_array[5])
+        ) % 10
       end
 
       def compile_routing_number
@@ -77,12 +88,15 @@ module Faker
       end
 
       def valid_routing_number
-        for _ in 0..50
-          micr = compile_routing_number
+        routing_number = compile_routing_number
+        checksum = checksum(routing_number)
+        return routing_number if valid_checksum?(routing_number, checksum)
 
-          break if checksum(micr)
-        end
-        micr
+        routing_number[0..7] + checksum.to_s
+      end
+
+      def valid_checksum?(routing_number, checksum)
+        routing_number[8].to_i == checksum
       end
 
       def compile_fraction(routing_num)
