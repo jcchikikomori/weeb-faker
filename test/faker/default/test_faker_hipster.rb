@@ -13,38 +13,48 @@ class TestFakerHipster < Test::Unit::TestCase
   # Words delivered by a standard request should be on the standard wordlist.
   def test_words
     @words = @tester.words(number: 1000)
-    @words.each { |w| assert @standard_wordlist.include?(w) }
+
+    assert_equal 1000, @words.length
+    @words.each { |w| assert_includes @standard_wordlist, w }
   end
 
   # Words should not return any word with spaces
   def test_words_without_spaces
     @words = @tester.words(number: 1000)
-    @words.each { |w| assert !w.match(/\s/) }
+
+    @words.each { |w| refute_match(/\s/, w) }
   end
 
   # Words requested from the supplemental list should all be in that list.
   def test_supplemental_words
     @words = @tester.words(number: 10_000, supplemental: true)
-    @words.each { |w| assert @complete_wordlist.include?(w) }
+
+    @words.each { |w| assert_includes @complete_wordlist, w }
   end
 
-  # Faker::Hipster.word generates random word from standart wordlist
+  # Faker::Hipster.word generates random word from standard wordlist
   def test_word
     @tester = Faker::Hipster
     @standard_wordlist = I18n.translate('faker.hipster.words')
-    1000.times { assert @standard_wordlist.include?(@tester.word) }
+
+    deterministically_verify -> { @tester.word }, depth: 5 do |word|
+      assert_includes @standard_wordlist, word
+    end
   end
 
   # Word should not return any word with spaces
   def test_word_without_spaces
     @tester = Faker::Hipster
-    1000.times { assert !@tester.word.match(/\s/) }
+
+    deterministically_verify -> { @tester.word }, depth: 5 do |word|
+      refute_match(/\s/, word)
+    end
   end
 
   def test_exact_count_param
-    assert(@tester.words(number: 2).length == 2)
-    assert(@tester.sentences(number: 2).length == 2)
-    assert(@tester.paragraphs(number: 2).length == 2)
+    assert_equal(2, @tester.words(number: 2).length)
+    assert_equal(2, @tester.sentences(number: 2).length)
+    assert_equal(2, @tester.paragraphs(number: 2).length)
   end
 
   def test_range_count_param
@@ -52,9 +62,9 @@ class TestFakerHipster < Test::Unit::TestCase
     ss = @tester.sentences(number: 2..5)
     ps = @tester.paragraphs(number: 2..5)
 
-    assert(ws.length >= 2 && ws.length <= 5)
-    assert(ss.length >= 2 && ss.length <= 5)
-    assert(ps.length >= 2 && ps.length <= 5)
+    assert(ws.length.between?(2, 5))
+    assert(ss.length.between?(2, 5))
+    assert(ps.length.between?(2, 5))
   end
 
   def test_array_count_param
@@ -72,13 +82,27 @@ class TestFakerHipster < Test::Unit::TestCase
     range = @tester.words(number: 250..500)
     array = @tester.words(number: [250, 500])
 
-    assert(exact.length == 500)
-    assert(range.length >= 250 && range.length <= 500)
+    assert_equal(500, exact.length)
+    assert(range.length.between?(250, 500))
     assert(array.length == 250 || array.length == 500)
+  end
+
+  def test_sentence_with_open_compounds_allowed
+    deterministically_verify -> { @tester.sentence(word_count: 5, random_words_to_add: 0, open_compounds_allowed: true) }, depth: 5 do |sentence|
+      assert_operator(sentence.split.length, :>=, 5)
+    end
+  end
+
+  # Sentence should not contain any open compounds
+  def test_sentence_without_open_compounds_allowed
+    deterministically_verify -> { @tester.sentence(word_count: 5, random_words_to_add: 0, open_compounds_allowed: false) }, depth: 5 do |sentence|
+      assert_equal(5, sentence.split.length)
+    end
   end
 
   def test_paragraph_char_count
     paragraph = @tester.paragraph_by_chars(characters: 256)
-    assert(paragraph.length == 256)
+
+    assert_equal(256, paragraph.length)
   end
 end

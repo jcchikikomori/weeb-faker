@@ -9,14 +9,14 @@ class TestFakerMarkdown < Test::Unit::TestCase
   end
 
   def test_headers
-    test_trigger = @tester.headers.split(' ')
+    test_trigger = @tester.headers.split
 
-    assert(test_trigger.length == 2)
-    assert(test_trigger.first.include?('#'))
+    assert_equal(2, test_trigger.length)
+    assert_includes(test_trigger.first, '#')
   end
 
   def test_emphasis
-    test_trigger = @tester.emphasis.split('')
+    test_trigger = @tester.emphasis.chars
 
     assert(test_trigger.to_set.intersect?(['_', '~', '*', '**'].to_set))
   end
@@ -25,11 +25,7 @@ class TestFakerMarkdown < Test::Unit::TestCase
     test_trigger = @tester.ordered_list.split("\n")
 
     test_trigger.each do |line|
-      if RUBY_VERSION < '2.4.0'
-        assert_instance_of(Fixnum, line[0].to_i)
-      else
-        assert_instance_of(Integer, line[0].to_i)
-      end
+      assert_instance_of(Integer, line[0].to_i)
     end
   end
 
@@ -42,21 +38,21 @@ class TestFakerMarkdown < Test::Unit::TestCase
   end
 
   def test_inline_code
-    test_trigger = @tester.inline_code.split('')
+    test_trigger = @tester.inline_code.chars
 
-    assert_equal(test_trigger.first, '`')
-    assert_equal(test_trigger.last, '`')
+    assert_equal('`', test_trigger.first)
+    assert_equal('`', test_trigger.last)
   end
 
   def test_block_code
-    test_trigger = @tester.block_code.split('')
+    test_trigger = @tester.block_code.chars
 
-    assert_equal(test_trigger[0], '`')
-    assert_equal(test_trigger[1], '`')
-    assert_equal(test_trigger[2], '`')
-    assert_equal(test_trigger[-1], '`')
-    assert_equal(test_trigger[-2], '`')
-    assert_equal(test_trigger[-3], '`')
+    assert_equal('`', test_trigger[0])
+    assert_equal('`', test_trigger[1])
+    assert_equal('`', test_trigger[2])
+    assert_equal('`', test_trigger[-1])
+    assert_equal('`', test_trigger[-2])
+    assert_equal('`', test_trigger[-3])
   end
 
   def test_table
@@ -65,8 +61,9 @@ class TestFakerMarkdown < Test::Unit::TestCase
     test_trigger.each do |table_data|
       assert_instance_of(String, table_data)
     end
-    assert_equal(test_trigger.length, 4)
-    assert_equal(test_trigger[1], '---- | ---- | ----')
+
+    assert_equal(4, test_trigger.length)
+    assert_equal('---- | ---- | ----', test_trigger[1])
   end
 
   def test_random
@@ -90,10 +87,10 @@ class TestFakerMarkdown < Test::Unit::TestCase
     test_array = []
     test_trigger.each_line { |substr| test_array << substr }
 
-    assert(test_array.length >= 3)
+    assert_operator(test_array.length, :>=, 3)
 
-    assert(test_array[0].split(' ').length == 2)
-    assert(test_array[0].split(' ').first.include?('#'))
+    assert_equal(2, test_array[0].split.length)
+    assert_includes(test_array[0].split.first, '#')
 
     assert_instance_of(String, test_array[0])
     assert_instance_of(String, test_array[1])
@@ -104,6 +101,6 @@ class TestFakerMarkdown < Test::Unit::TestCase
 
   def random_method
     method_list = Faker::Markdown.public_methods(false) - Faker::Base.methods
-    method_list[rand(0..method_list.length - 1)]
+    method_list[rand(0..(method_list.length - 1))]
   end
 end

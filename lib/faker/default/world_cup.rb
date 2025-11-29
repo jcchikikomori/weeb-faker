@@ -24,7 +24,7 @@ module Faker
       # @example
       #   Faker::WorldCup.city #=> "Moscow"
       #
-      # @faker.version next
+      # @faker.version 2.13.0
       def city
         fetch('world_cup.cities')
       end
@@ -37,7 +37,7 @@ module Faker
       # @example
       #   Faker::WorldCup.stadium #=> "Rostov Arena"
       #
-      # @faker.version next
+      # @faker.version 2.13.0
       def stadium
         fetch('world_cup.stadiums')
       end
@@ -52,12 +52,8 @@ module Faker
       # @example
       #   Faker::WorldCup.group #=> "Russia"
       #
-      # @faker.version next
-      def group(legacy_group = NOT_GIVEN, group: 'group_A')
-        warn_for_deprecated_arguments do |keywords|
-          keywords << :group if legacy_group != NOT_GIVEN
-        end
-
+      # @faker.version 2.13.0
+      def group(group: 'group_A')
         fetch("world_cup.groups.#{group}")
       end
 
@@ -72,13 +68,8 @@ module Faker
       # @example
       #   Faker::WorldCup.roster(country: 'Spain', type: 'forwards') #=> "Diego Costa"
       #
-      # @faker.version next
-      def roster(legacy_country = NOT_GIVEN, legacy_type = NOT_GIVEN, country: 'Egypt', type: 'coach')
-        warn_for_deprecated_arguments do |keywords|
-          keywords << :country if legacy_country != NOT_GIVEN
-          keywords << :type if legacy_type != NOT_GIVEN
-        end
-
+      # @faker.version 2.13.0
+      def roster(country: 'Egypt', type: 'coach')
         fetch("world_cup.rosters.#{country}.#{type}")
       end
     end

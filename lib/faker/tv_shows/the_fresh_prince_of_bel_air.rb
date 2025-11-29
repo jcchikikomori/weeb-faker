@@ -20,16 +20,16 @@ module Faker
         end
 
         ##
-        # Produces a celebrity from The Fresh Prince of Bel-Air.
+        # Produces a actor from The Fresh Prince of Bel-Air.
         #
         # @return [String]
         #
         # @example
-        #   Faker::TvShows::TheFreshPrinceOfBelAir.celebrity #=> "Quincy Jones"
+        #   Faker::TvShows::TheFreshPrinceOfBelAir.actor #=> "Quincy Jones"
         #
-        # @faker.version 1.8.3
-        def celebrity
-          fetch('the_fresh_prince_of_bel_air.celebrities')
+        # @faker.version next
+        def actor
+          fetch('the_fresh_prince_of_bel_air.actors')
         end
 
         ##

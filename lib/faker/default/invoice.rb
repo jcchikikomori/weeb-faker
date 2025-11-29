@@ -5,35 +5,49 @@ module Faker
     flexible :invoice
 
     class << self
-      # Generate random amount between values with 2 decimals
-      def amount_between(legacy_from = NOT_GIVEN, legacy_to = NOT_GIVEN, from: 0, to: 0)
-        warn_for_deprecated_arguments do |keywords|
-          keywords << :from if legacy_from != NOT_GIVEN
-          keywords << :to if legacy_to != NOT_GIVEN
-        end
-
+      ##
+      # Produces a random amount between values with 2 decimals
+      #
+      # @param from [Integer] Specifies lower limit.
+      # @param to [Integer] Specifies upper limit.
+      # @return [Integer]
+      #
+      # @example
+      #   Faker::Invoice.amount_between #=> 0
+      #   Faker::Invoice.amount_between(from: 0, to: 10) #=> 4.33
+      #
+      # @faker.version 1.9.0
+      def amount_between(from: 0, to: 0)
         Faker::Base.rand_in_range(from, to).round(2)
       end
 
-      # International bank slip reference https://en.wikipedia.org/wiki/Creditor_Reference
-      # ref is optional so that we can create unit tests
-      def creditor_reference(legacy_ref = NOT_GIVEN, ref: '')
-        warn_for_deprecated_arguments do |keywords|
-          keywords << :ref if legacy_ref != NOT_GIVEN
-        end
-
+      ##
+      # Produces a random valid reference according to the International bank slip reference https://en.wikipedia.org/wiki/Creditor_Reference
+      #
+      # @param ref [String] Specifies reference base.
+      # @return [String]
+      #
+      # @example
+      #   Faker::Invoice.creditor_reference #=> "RF34118592570724925498"
+      #
+      # @faker.version 1.9.0
+      def creditor_reference(ref: '')
         ref = reference if ref.empty?
 
-        'RF' + iban_checksum('RF', ref) + ref
+        "RF#{iban_checksum('RF', ref)}#{ref}"
       end
 
-      # Payment references have some rules in certain countries
-      # ref is optional so that we can create unit tests
-      def reference(legacy_ref = NOT_GIVEN, ref: '')
-        warn_for_deprecated_arguments do |keywords|
-          keywords << :ref if legacy_ref != NOT_GIVEN
-        end
-
+      ##
+      # Produces a random valid reference.
+      #
+      # @param ref [String] Specifies reference base.
+      # @return [String]
+      #
+      # @example
+      #   Faker::Invoice.reference #=> "45656646957845"
+      #
+      # @faker.version 1.9.0
+      def reference(ref: '')
         pattern = fetch('invoice.reference.pattern')
 
         ref = Base.regexify(/#{pattern}/) if ref.empty?
@@ -88,7 +102,7 @@ module Faker
         mod10_remainder(weighted_sum)
       end
 
-      # Calculates weigthed sum
+      # Calculates weighted sum
       #
       # For example with 12345678, [1,2]
       # Ref.num. 1 2 3 4 5 6 7 8

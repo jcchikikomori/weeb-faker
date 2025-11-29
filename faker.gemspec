@@ -15,26 +15,18 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'https://github.com/faker-ruby/faker'
   spec.license     = 'MIT'
 
-  spec.files         = Dir['lib/**/*'] + %w[History.md License.txt CHANGELOG.md README.md]
+  spec.files         = Dir['lib/**/*'] + %w[License.txt CHANGELOG.md README.md]
   spec.bindir        = 'bin'
   spec.executables   = ['faker']
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.3'
+  spec.required_ruby_version = '>= 3.0'
 
-  spec.metadata['changelog_uri'] = 'https://github.com/faker-ruby/faker/blob/master/CHANGELOG.md'
+  spec.metadata['changelog_uri'] = 'https://github.com/faker-ruby/faker/blob/main/CHANGELOG.md'
   spec.metadata['source_code_uri'] = 'https://github.com/faker-ruby/faker'
   spec.metadata['bug_tracker_uri'] = 'https://github.com/faker-ruby/faker/issues'
-  spec.metadata['documentation_uri'] = 'https://rubydoc.info/github/faker-ruby/faker/master'
+  spec.metadata['documentation_uri'] = 'https://rubydoc.info/github/faker-ruby/faker'
   spec.metadata['yard.run'] = 'yri'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency('i18n', '>= 1.6', '< 1.8')
-
-  spec.add_development_dependency('minitest', '5.13.0')
-  spec.add_development_dependency('pry', '0.12.2')
-  spec.add_development_dependency('rake', '13.0.1')
-  spec.add_development_dependency('rubocop', '0.77.0')
-  spec.add_development_dependency('simplecov', '0.17.1')
-  spec.add_development_dependency('test-unit', '3.3.4')
-  spec.add_development_dependency('timecop', '0.9.1')
-  spec.add_development_dependency('yard', '0.9.20')
+  spec.add_dependency('i18n', '>= 1.8.11', '< 2')
 end

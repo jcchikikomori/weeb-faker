@@ -12,9 +12,9 @@ en:
         - /6011-####-####-###L/
         - /65##-####-####-###L/
         - /64[4-9]#-####-####-###L/
-        - /6011-62##-####-####-###L/
-        - /65##-62##-####-####-###L/
-        - /64[4-9]#-62##-####-####-###L/
+        - /6011-62##-####-####-##L/
+        - /65##-62##-####-####-##L/
+        - /64[4-9]#-62##-####-####-##L/
         american_express:
         - /34##-######-####L/
         - /37##-######-####L/
@@ -48,6 +48,8 @@ en:
         - /6706#########{5,6}L/
         - /6771#########{5,6}L/
         - /6709#########{5,6}L/
+      condominium_fiscal_code:
+        IT: "###########"
       vat_number:
         AT: "ATU########"
         AR: "AR###########"
@@ -79,7 +81,7 @@ en:
         HR: "HR### ### ### ##"
         "NO": "NO#########"
         HU: "HU########"
-        IT: "IT##########"
+        IT: "IT###########"
         LT:
         - "LT#########"
         - "LT############"
@@ -111,3 +113,77 @@ en:
         ZA:
         - "ZA##########"
         - "ZA###########"
+      ticker:
+        nasdaq:
+          - MSFT
+          - AAPL
+          - AMZN
+          - GOOG
+          - FB
+          - INTC
+          - CSCO
+          - CMCSA
+          - PEP
+          - ADBE
+          - NVDA
+          - NFLX
+          - PYPL
+          - COST
+          - AMGN
+          - AVGO
+          - TXN
+          - CHTR
+          - SBUX
+          - QCOM
+          - GILD
+          - MDLZ
+          - FISV
+          - BKNG
+          - INTU
+        nyse:
+          - XOM
+          - WFC
+          - JNJ
+          - GE
+          - NVX
+          - WMT
+          - JPM
+          - PG
+          - TM
+          - PFE
+          - CVX
+          - BABA
+          - VZ
+          - BUD
+          - ORCL
+          - DIS
+          - KO
+          - HSBC
+          - T
+          - BAC
+          - C
+          - MRK
+          - V
+          - BRK.B
+          - MA
+      stock_market:
+        - NYSE
+        - NASDAQ
+        - SSE
+        - HKEX
+        - JPX
+        - SZSE
+        - LSE
+        - TSX
+        - NSE-INDIA
+        - FSX
+        - TADAWUL
+        - OMXC-COPENHAGEN
+        - KRX
+        - BSE-BOMBAY
+        - SIX
+        - EURONEXT-PARIS
+        - TWSE
+        - ASX
+        - JSE
+        - BOVESPA

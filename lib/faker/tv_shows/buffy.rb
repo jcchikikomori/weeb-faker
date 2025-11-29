@@ -33,16 +33,16 @@ module Faker
         end
 
         ##
-        # Produces a celebrity from Buffy the Vampire Slayer.
+        # Produces a actor from Buffy the Vampire Slayer.
         #
         # @return [String]
         #
         # @example
-        #   Faker::TvShows::Buffy.celebrity #=> "John Ritter"
+        #   Faker::TvShows::Buffy.actor #=> "John Ritter"
         #
-        # @faker.version 1.9.2
-        def celebrity
-          fetch('buffy.celebrities')
+        # @faker.version next
+        def actor
+          fetch('buffy.actors')
         end
 
         ##

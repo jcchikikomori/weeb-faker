@@ -79,23 +79,10 @@ module Faker
         # @example
         #   Faker::TvShows::DrWho.villain #=> "The Master"
         #
-        # @faker.version next
+        # @faker.version 2.13.0
         def villain
           fetch('dr_who.villains')
         end
-
-        ##
-        # Produces a villain from Doctor Who.
-        #
-        # @return [String]
-        #
-        # @example
-        #   Faker::TvShows::DrWho.villian #=> "The Master"
-        #
-        # @deprecated Use the correctly-spelled `villain` method instead.
-        #
-        # @faker.version 1.8.0
-        alias villian villain
 
         ##
         # Produces a species from Doctor Who.

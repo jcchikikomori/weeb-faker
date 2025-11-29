@@ -31,6 +31,19 @@ module Faker
         end
 
         ##
+        # Produces the name of a city from Dune
+        #
+        # @return [String]
+        #
+        # @example
+        #   Faker::Books::Dune.city #=> "Arrakeen"
+        #
+        # @faker.version next
+        def city
+          fetch('dune.cities')
+        end
+
+        ##
         # Produces the name of a planet from Dune
         #
         # @return [String]
@@ -58,11 +71,7 @@ module Faker
         #     #=> "He who controls the spice, controls the universe!"
         #
         # @faker.version 1.9.3
-        def quote(legacy_character = NOT_GIVEN, character: nil)
-          warn_for_deprecated_arguments do |keywords|
-            keywords << :character if legacy_character != NOT_GIVEN
-          end
-
+        def quote(character: nil)
           quoted_characters = translate('faker.dune.quotes').keys
 
           if character.nil?
@@ -76,7 +85,7 @@ module Faker
             end
           end
 
-          fetch('dune.quotes.' + character)
+          fetch("dune.quotes.#{character}")
         end
 
         ##
@@ -93,11 +102,7 @@ module Faker
         #     #=> "May thy knife chip and shatter."
         #
         # @faker.version 1.9.3
-        def saying(legacy_source = NOT_GIVEN, source: nil)
-          warn_for_deprecated_arguments do |keywords|
-            keywords << :source if legacy_source != NOT_GIVEN
-          end
-
+        def saying(source: nil)
           sourced_sayings = translate('faker.dune.sayings').keys
 
           if source.nil?
@@ -111,7 +116,7 @@ module Faker
             end
           end
 
-          fetch('dune.sayings.' + source)
+          fetch("dune.sayings.#{source}")
         end
       end
     end

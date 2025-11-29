@@ -22,12 +22,15 @@ Faker::Company.ein #=> "34-8488813"
 Faker::Company.duns_number #=> "08-341-3736"
 
 # Get a random company logo url in PNG format.
-Faker::Company.logo #=> "https://pigment.github.com/fake-logos/logos/medium/color/5.png"
+Faker::Company.logo #=> "https://pigment.github.io/fake-logos/logos/medium/color/5.png"
 
 Faker::Company.type #=> "Privately Held"
 
 # Get a random profession
 Faker::Company.profession #=> "firefighter"
+
+# Get a random department
+Faker::Company.department #=> "Information Technology"
 
 ###############################################################
 # Generate country specific identifiers
@@ -75,4 +78,14 @@ Faker::Company.brazilian_company_number(formatted: true) #=> "00.000.000/0000-00
 
 # Get a random USA Standard Industrial Classification code (SIC)
 Faker::Company.sic_code #=> "0851"
+
+# Get a random Russian tax number:
+Faker::Company.russian_tax_number #=> "0965855857"
+Faker::Company.russian_tax_number(region: '77') #=> "7717152803"
+Faker::Company.russian_tax_number(type: :individual) #=> "488935903348"
+Faker::Company.russian_tax_number(region: '77', type: :individual) #=> "779124694601"
+
+# Get a random formatted Indian tax number (GST)
+Faker::Company.indian_gst_number #=> "15VQPNZ2126J2ZU"
+Faker::Company.indian_gst_number(state_code: "22") #=> "22ZVWEY6632K0ZN"
 ```
